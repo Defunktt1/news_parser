@@ -1,3 +1,7 @@
+"""
+News model
+"""
+
 from sqlalchemy import Column, Integer, DateTime, VARCHAR, String
 from base import Base
 import datetime
