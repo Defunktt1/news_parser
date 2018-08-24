@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.exc import OperationalError
 from base import Base
-from bi_market_info_block import News
+from models.news import News
 
 import json
 
