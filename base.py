@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.exc import SQLAlchemyError, OperationalError
 
 import json
 
@@ -8,6 +8,7 @@ with open('config.json') as c:
     config = json.load(c)
 
 db_config = config['database']
+
 engine = create_engine(
     'postgresql://{0}:{1}@{2}:{3}/{4}'.format(
         db_config['username'],
@@ -18,6 +19,11 @@ engine = create_engine(
     )
 )
 
-Session = sessionmaker(bind=engine)
-
 Base = declarative_base()
+
+try:
+    Base.metadata.create_all(engine)
+    print('connected')
+except OperationalError as e:
+    exit(e)
+
